@@ -5,7 +5,9 @@ import './App.css'
 function App() {
   let post = '강남우동맛집';
   let [글제목, 글제목변경] = useState(['남자 코트 추천','맛집추천','여자 옷 추천']);
-  let [따봉, 따봉변경] = useState(0);  
+  let [따봉, 따봉변경] = useState([0,2,3]);  
+  let [modal, setModal] = useState(false);
+
   return (
     <div className="App">
       <div className="black-nav">
@@ -20,21 +22,23 @@ function App() {
         }}>
           글수정
       </button>
-      <div className="list">
-        
-        <h4>{글제목[0]} <span onClick={()=> {따봉변경(따봉+1)}}>👍</span> {따봉}</h4>
-        <p>2월 17일 발행</p>
-      </div>
-      <div className="list">
-        <h4>{글제목[1]}</h4>
-        <p>2월 17일 발행</p>
-      </div>
-      <div className="list">
-        <h4>{글제목[2]}</h4>
-        <p>2월 17일 발행</p>
-      </div>
-      <Modal></Modal>
-      <Test></Test>
+      {
+         글제목.map(function(a,i){
+            return(
+                <div className="list" key="i">
+                    <h4>
+                        {글제목[i]}
+                        <span onClick={()=>{
+                            let copy = [...따봉];
+                            copy[i] += 1
+                            따봉변경(copy)
+                            }}>👍</span>{따봉[i]}
+                    </h4>
+                    <p>2월 17일 발행</p>
+                </div>
+            )
+         })
+      }
     </div>
   )
 }
