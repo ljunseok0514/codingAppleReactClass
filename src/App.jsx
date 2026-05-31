@@ -6,27 +6,30 @@ function App() {
   let post = '강남우동맛집';
   let [글제목, 글제목변경] = useState(['남자 코트 추천','맛집추천','여자 옷 추천']);
   let [따봉, 따봉변경] = useState([0,2,3]);  
-  let [modal, setModal] = useState(false);
+  let [modal, setModal] = useState(true);
+  let [모달제목, 모달제목변경] = useState('모달제목')
 
   return (
     <div className="App">
       <div className="black-nav">
         <h4>ReactBlog</h4>
       </div>
-      <button onClick={() => {
+      {/* <button onClick={() => {
           let copy = [...글제목];
           copy[0] ='여자코트 추천';
           copy.sort();
-          // 글제목[0] = '여자코트 추천';
           글제목변경(copy);
         }}>
           글수정
-      </button>
+      </button> */}
       {
          글제목.map(function(a,i){
             return(
-                <div className="list" key="i">
-                    <h4>
+                <div className="list" key={i}>
+                    <h4 onClick={()=>{
+                      모달제목변경(글제목[i]);
+
+                    }}>
                         {글제목[i]}
                         <span onClick={()=>{
                             let copy = [...따봉];
@@ -39,23 +42,27 @@ function App() {
             )
          })
       }
+      {
+        modal == true ? <Modal color={'yellow'} 모달제목={모달제목} 모달제목변경={모달제목변경} 글제목={글제목} 글제목변경={글제목변경}/> : null
+      }
     </div>
   )
 }
 
-function Modal(){
+function Modal(props){
       return(
-      <div className="modal">
-        <h4>제목</h4>
+      <div className="modal" style={{background: props.color}}>
+        <h4>{props.모달제목}</h4>
         <p>날짜</p>
         <p>상세내용</p>
+        <button onClick={() => {
+          let copy = [...props.글제목]
+          copy[0] ='여자코트 추천';
+          // console.log(props.글제목변경(copy))
+          props.글제목변경(copy);
+        }}>글수정</button>
       </div>
       )
-}
-function Test(){
-  return(
-    <h2>테스트입니다</h2>
-  )
 }
 
 export default App
